@@ -1,0 +1,27 @@
+---
+spring:
+  profiles: server1                                 # 指定profile=server1
+server:
+  port: 8761
+eureka:
+  instance:
+    hostname: server1                               # 指定当profile=server1时，主机名
+  client:
+    serviceUrl:
+      defaultZone: http://server2:8762/eureka/      # 将自己注册到server2这个Eureka上面去
+  server:
+    enableSelfPreservation: false                   # 关掉Eureka的自我保护机制
+
+---
+spring:
+  profiles: server2
+server:
+  port: 8762
+eureka:
+  instance:
+    hostname: server2
+  client:
+    serviceUrl:
+      defaultZone: http://server1:8761/eureka/
+  server:
+    enable-self-preservation: false
